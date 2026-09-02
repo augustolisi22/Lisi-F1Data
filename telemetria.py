@@ -25,5 +25,8 @@ def comparar_ritmo(piloto1, piloto2, gp, año):
         sesion = fastf1.get_session(int(año), gran_premio, 'R')
         sesion.load(telemetry=True, weather=False)
 
+        resultado_p1 = sesion.results.loc[sesion.results['Abbreviation'] == p1].iloc[0]
+        resultado_p2 = sesion.results.loc[sesion.results['Abbreviation'] == p2].iloc[0]
+
     except:
         return "⚠️ Error al buscar."
