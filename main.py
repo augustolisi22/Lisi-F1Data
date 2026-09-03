@@ -37,9 +37,28 @@ def main(page: ft.Page):
     txt_p1 = ft.Dropdown(label="Piloto 1", width=300, options=[ft.dropdown.Option(p) for p in lista_pilotos])
     txt_p2 = ft.Dropdown(label="Piloto 2", width=300, options=[ft.dropdown.Option(p) for p in lista_pilotos])
 
+    resultado_texto = ft.Text(value="", size=20, weight="bold")
+
+    def boton_click(e):
+        if not txt_gp.value or not txt_año.value or not txt_p1.value or not txt_p2.value:
+            resultado_texto.value = "⚠️ Por favor, seleccioná todos los campos."
+            page.update()
+            return 
+        
+        sigla_p1 = txt_p1.value[:3]
+        sigla_p2 = txt_p2.value[:3]
+        nombre_gp = txt_gp.value
+
+        res_texto = comparar_ritmo(sigla_p1, sigla_p2, nombre_gp, txt_año.value)
+        resultado_texto.value = res_texto
+
+    btn_comparar = ft.ElevatedButton("Analizar", on_click=boton_click)
+
     page.add(
         ft.Row([txt_gp, txt_año]),
-        ft.Row([txt_p1, txt_p2])
+        ft.Row([txt_p1, txt_p2]),
+        btn_comparar,
+        resultado_texto
     )
 
 ft.app(target=main)
