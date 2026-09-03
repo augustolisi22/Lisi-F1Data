@@ -47,5 +47,18 @@ def comparar_ritmo(piloto1, piloto2, gp, año):
         vuelta_p1 = laps_p1.pick_fastest()
         vuelta_p2 = laps_p2.pick_fastest()
         
+
+        tiempo_p1 = formato_tiempo(vuelta_p1['LapTime'])
+        goma_p1 = vuelta_p1['Compound']
+        s1_p1 = formato_tiempo(vuelta_p1['Sector1Time'])
+        s2_p1 = formato_tiempo(vuelta_p1['Sector2Time'])
+        s3_p1 = formato_tiempo(vuelta_p1['Sector3Time'])
+        
+        tiempo_p2 = formato_tiempo(vuelta_p2['LapTime'])
+        goma_p2 = vuelta_p2['Compound']
+        s1_p2 = formato_tiempo(vuelta_p2['Sector1Time'])
+        s2_p2 = formato_tiempo(vuelta_p2['Sector2Time'])
+        s3_p2 = formato_tiempo(vuelta_p2['Sector3Time'])
+               
     except:
         return "⚠️ Error al buscar."
