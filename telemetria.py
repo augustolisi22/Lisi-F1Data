@@ -28,6 +28,9 @@ def comparar_ritmo(piloto1, piloto2, gp, año):
         resultado_p1 = sesion.results.loc[sesion.results['Abbreviation'] == p1].iloc[0]
         resultado_p2 = sesion.results.loc[sesion.results['Abbreviation'] == p2].iloc[0]
 
+        estado_p1 = resultado_p1['Status']
+        estado_p2 = resultado_p2['Status']
+        
         try:
             pos_p1 = f"P{int(resultado_p1['Position'])}"
         except:
@@ -59,6 +62,14 @@ def comparar_ritmo(piloto1, piloto2, gp, año):
         s1_p2 = formato_tiempo(vuelta_p2['Sector1Time'])
         s2_p2 = formato_tiempo(vuelta_p2['Sector2Time'])
         s3_p2 = formato_tiempo(vuelta_p2['Sector3Time'])
-               
+
+        texto_resultado = (
+            f"{p1} [{pos_p1} - {estado_p1}]: {tiempo_p1} ({goma_p1}) | Vueltas: {vueltas_totales_p1}\n"
+            f"   Sectores: S1 [{s1_p1}] - S2 [{s2_p1}] - S3 [{s3_p1}]\n"
+            f"{p2} [{pos_p2} - {estado_p2}]: {tiempo_p2} ({goma_p2}) | Vueltas: {vueltas_totales_p2}\n"
+            f"   Sectores: S1 [{s1_p2}] - S2 [{s2_p2}] - S3 [{s3_p2}]"
+        )
+        
+        return texto_resultado               
     except:
         return "⚠️ Error al buscar."
