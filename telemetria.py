@@ -6,7 +6,6 @@ if not os.path.exists('cache'):
 
 fastf1.Cache.enable_cache('cache')
 
-
 def formato_tiempo(tiempo):
     try:
         minutos = int(tiempo.total_seconds() // 60)
@@ -14,7 +13,6 @@ def formato_tiempo(tiempo):
         return f"{minutos:02d}:{segundos:06.3f}"
     except:
         return "No hay tiempo disponible"
-
 
 def comparar_ritmo(piloto1, piloto2, gp, año):
     try:
@@ -70,6 +68,7 @@ def comparar_ritmo(piloto1, piloto2, gp, año):
             f"   Sectores: S1 [{s1_p2}] - S2 [{s2_p2}] - S3 [{s3_p2}]"
         )
         
-        return texto_resultado               
-    except:
-        return "⚠️ Error al buscar."
+        return texto_resultado              
+     
+    except Exception as e:
+        return "⚠️ Error al buscar. Verificá los datos ingresados (puede que el piloto no haya participado o sea un DNS)."

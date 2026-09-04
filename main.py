@@ -38,6 +38,21 @@ def main(page: ft.Page):
     txt_p2 = ft.Dropdown(label="Piloto 2", width=300, options=[ft.dropdown.Option(p) for p in lista_pilotos])
 
     resultado_texto = ft.Text(value="", size=20, weight="bold")
+    lista_historial = ft.Column()
+
+    def actualizar_historial():
+        lista_historial.controls.clear()
+        datos = leer_historial()
+        
+        for fila in reversed(datos[-4:]): 
+            if len(fila) == 5:
+                titulo = ft.Text(f"🏁 {fila[2]} {fila[3]}: {fila[0]} vs {fila[1]}", weight="bold")
+                detalle = ft.Text(fila[4], size=12) 
+                
+                item = ft.Column([titulo, detalle, ft.Divider(height=1)])
+                lista_historial.controls.append(item)
+
+    page.update()
 
     def boton_click(e):
         if not txt_gp.value or not txt_año.value or not txt_p1.value or not txt_p2.value:
@@ -50,15 +65,27 @@ def main(page: ft.Page):
         nombre_gp = txt_gp.value
 
         res_texto = comparar_ritmo(sigla_p1, sigla_p2, nombre_gp, txt_año.value)
+        
         resultado_texto.value = res_texto
+        
+        if "⚠️" not in res_texto:
+            guardar_busqueda(sigla_p1, sigla_p2, txt_gp.value, txt_año.value, res_texto)
+            actualizar_historial()
+            
+        page.update()
 
     btn_comparar = ft.ElevatedButton("Analizar", on_click=boton_click)
+
+    actualizar_historial()
 
     page.add(
         ft.Row([txt_gp, txt_año]),
         ft.Row([txt_p1, txt_p2]),
         btn_comparar,
-        resultado_texto
+        resultado_texto,
+        ft.Divider(),
+        ft.Text("Últimas consultas:", size=20, weight="bold"),
+        lista_historial
     )
 
 ft.app(target=main)
